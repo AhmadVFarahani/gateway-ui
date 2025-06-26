@@ -5,12 +5,24 @@ import { getCompanies, deleteCompany } from "../lib/companyApi";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Company } from "../types/company";
+import {
+  AlertDialog,
+  AlertDialogTrigger,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogCancel,
+  AlertDialogAction,
+} from "@/components/ui/alert-dialog";
 import { toast } from "sonner";
 
 export function CompanyListPage() {
   const [companies, setCompanies] = useState<Company[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [selectedId, setSelectedId] = useState<number | null>(null);
 
   useEffect(() => {
     getCompanies()
@@ -19,13 +31,16 @@ export function CompanyListPage() {
       .finally(() => setLoading(false));
   }, []);
 
-  const handleDelete = async (id: number) => {
+  const handleDelete = async () => {
+    if (selectedId === null) return;
     try {
-      await deleteCompany(id);
-      setCompanies((prev) => prev.filter((company) => company.id !== id));
-      toast.success("The company has been removed.");
-    } catch (e) {
-      toast.success("Something went wrong while deleting" + e);
+      await deleteCompany(selectedId);
+      setCompanies((prev) => prev.filter((c) => c.id !== selectedId));
+      toast.success("Company deleted successfully");
+    } catch {
+      toast.error("Failed to delete company");
+    } finally {
+      setSelectedId(null);
     }
   };
 
@@ -59,17 +74,36 @@ export function CompanyListPage() {
                   Active: {company.isActive ? "Yes" : "No"}
                 </p>
               </div>
-
               <div className="flex gap-2">
                 <Link href={`/company/${company.id}/edit`}>
                   <Button variant="outline">Edit</Button>
                 </Link>
-                <Button
-                  variant="destructive"
-                  onClick={() => handleDelete(company.id)}
-                >
-                  Delete
-                </Button>
+                <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <Button
+                      variant="destructive"
+                      onClick={() => setSelectedId(company.id)}
+                    >
+                      Delete
+                    </Button>
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>
+                        Are you sure you want to delete this company?
+                      </AlertDialogTitle>
+                      <AlertDialogDescription>
+                        This action cannot be undone.
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>Cancel</AlertDialogCancel>
+                      <AlertDialogAction onClick={handleDelete}>
+                        Confirm
+                      </AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
               </div>
             </div>
           ))}
