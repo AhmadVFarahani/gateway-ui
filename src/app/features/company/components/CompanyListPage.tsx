@@ -1,10 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getCompanies } from "../lib/companyApi";
+import { getCompanies, deleteCompany } from "../lib/companyApi";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Company } from "../types/company";
+import { toast } from "sonner";
 
 export function CompanyListPage() {
   const [companies, setCompanies] = useState<Company[]>([]);
@@ -17,6 +18,16 @@ export function CompanyListPage() {
       .catch(() => setError("Failed to fetch companies"))
       .finally(() => setLoading(false));
   }, []);
+
+  const handleDelete = async (id: number) => {
+    try {
+      await deleteCompany(id);
+      setCompanies((prev) => prev.filter((company) => company.id !== id));
+      toast.success("The company has been removed.");
+    } catch (e) {
+      toast.success("Something went wrong while deleting" + e);
+    }
+  };
 
   if (loading) return <div className="p-6">Loading...</div>;
   if (error) return <div className="p-6 text-red-500">{error}</div>;
@@ -45,12 +56,21 @@ export function CompanyListPage() {
                   Description: {company.description}
                 </p>
                 <p className="text-sm text-gray-500">
-                  Active : {company.isActive ? "Yes" : "No"}
+                  Active: {company.isActive ? "Yes" : "No"}
                 </p>
               </div>
-              <Link href={`/company/${company.id}/edit`}>
-                <Button variant="outline">Edit</Button>
-              </Link>
+
+              <div className="flex gap-2">
+                <Link href={`/company/${company.id}/edit`}>
+                  <Button variant="outline">Edit</Button>
+                </Link>
+                <Button
+                  variant="destructive"
+                  onClick={() => handleDelete(company.id)}
+                >
+                  Delete
+                </Button>
+              </div>
             </div>
           ))}
         </div>
