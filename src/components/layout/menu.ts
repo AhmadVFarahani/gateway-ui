@@ -6,7 +6,7 @@ export const sidebarMenu = [
     icon: Home,
     items: [
       { label: "Company", href: "/company" },
-      { label: "User", href: "/company" },
+      { label: "User", href: "/user" },
     ],
   },
   {
