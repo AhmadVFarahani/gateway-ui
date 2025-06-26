@@ -1,5 +1,3 @@
-// src/app/features/company/[id]/edit/page.tsx
-
 import UserForm from "@/features/user/components/UserForm";
 import { getUser } from "@/features/user/lib/userApi";
 import { notFound } from "next/navigation";
