@@ -8,6 +8,13 @@ export async function getUsers(): Promise<User[]> {
   return res.json();
 }
 
+export async function getUsersByCompanyId(companyId: number): Promise<User[]> {
+  debugger;
+  const res = await fetch(`${baseUrl}/byCompany?companyId=${companyId}`);
+  if (!res.ok) throw new Error("Failed to fetch users");
+  return res.json();
+}
+
 export async function getUser(id: number): Promise<User> {
   const res = await fetch(`${baseUrl}/${id}`);
   if (!res.ok) throw new Error("Failed to fetch user");

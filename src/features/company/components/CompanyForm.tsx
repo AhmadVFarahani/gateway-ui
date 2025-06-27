@@ -4,6 +4,7 @@ import { useState } from "react";
 import { createCompany, updateCompany } from "../lib/companyApi";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { CompanyUserList } from "./CompanyUserList";
 
 interface CompanyFormProps {
   id?: number; // <-- new
@@ -57,44 +58,50 @@ export default function CompanyForm({
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 max-w-md mx-auto mt-8">
-      <div>
-        <label className="block">Name:</label>
-        <input
-          name="name"
-          value={formData.name}
-          onChange={handleChange}
-          className="border p-2 w-full"
-          required
-        />
-      </div>
-      <div>
-        <label className="block">Description:</label>
-        <textarea
-          name="description"
-          value={formData.description}
-          onChange={handleChange}
-          className="border p-2 w-full"
-        />
-      </div>
-      <div>
-        <label className="inline-flex items-center">
+    <div>
+      <form onSubmit={handleSubmit} className="space-y-4 max-w-md mx-auto mt-8">
+        <div>
+          <label className="block">Name:</label>
           <input
-            type="checkbox"
-            name="isActive"
-            checked={formData.isActive}
+            name="name"
+            value={formData.name}
             onChange={handleChange}
-            className="mr-2"
+            className="border p-2 w-full"
+            required
           />
-          Is Active
-        </label>
+        </div>
+        <div>
+          <label className="block">Description:</label>
+          <textarea
+            name="description"
+            value={formData.description}
+            onChange={handleChange}
+            className="border p-2 w-full"
+          />
+        </div>
+        <div>
+          <label className="inline-flex items-center">
+            <input
+              type="checkbox"
+              name="isActive"
+              checked={formData.isActive}
+              onChange={handleChange}
+              className="mr-2"
+            />
+            Is Active
+          </label>
+        </div>
+        <button
+          type="submit"
+          className="bg-blue-500 text-white px-4 py-2 rounded"
+        >
+          {id ? "Update" : "Create"}
+        </button>
+      </form>
+
+      <div>
+        <CompanyUserList companyId={id || 0} />
       </div>
-      <button
-        type="submit"
-        className="bg-blue-500 text-white px-4 py-2 rounded"
-      >
-        {id ? "Update" : "Create"}
-      </button>
-    </form>
+    </div>
   );
 }

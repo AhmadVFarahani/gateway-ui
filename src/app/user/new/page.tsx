@@ -1,4 +1,4 @@
-import { UserForm } from "@/features/user/components/UserForm";
+import UserForm from "@/features/user/components/UserForm";
 
 export default function NewCompanyPage() {
   return (
