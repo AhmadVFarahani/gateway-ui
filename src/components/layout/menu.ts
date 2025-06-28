@@ -8,6 +8,7 @@ export const sidebarMenu = [
       { label: "Company", href: "/company" },
       { label: "User", href: "/user" },
       { label: "Role", href: "/role" },
+      { label: "Service", href: "/service" },
     ],
   },
   {

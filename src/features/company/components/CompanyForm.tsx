@@ -46,7 +46,6 @@ export default function CompanyForm({
         toast.success("Company updated successfully!");
       } else {
         const res = await createCompany(formData);
-        debugger;
         toast.success("Company created successfully!");
         router.push(`/company/${res.id}/edit`);
       }
