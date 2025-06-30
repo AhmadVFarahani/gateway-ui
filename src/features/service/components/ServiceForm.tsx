@@ -14,7 +14,7 @@ interface ServiceFormProps {
   initialData?: {
     name: string;
     description: string;
-    baseURL: string;
+    baseUrl: string;
     isActive: boolean;
   };
 }
@@ -28,7 +28,7 @@ export default function ServiceForm({
     initialData || {
       name: "",
       description: "",
-      baseURL: "",
+      baseUrl: "",
       isActive: true,
     }
   );
@@ -73,11 +73,11 @@ export default function ServiceForm({
       </div>
 
       <div>
-        <Label htmlFor="baseURL">Base URL</Label>
+        <Label htmlFor="baseUrl">Base URL</Label>
         <Input
-          id="baseURL"
-          name="baseURL"
-          value={formData.baseURL}
+          id="baseUrl"
+          name="baseUrl"
+          value={formData.baseUrl}
           onChange={handleChange}
         />
       </div>

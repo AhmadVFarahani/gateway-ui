@@ -1,5 +1,3 @@
-// src/app/features/company/[id]/edit/page.tsx
-
 import CompanyForm from "@/features/company/components/CompanyForm";
 import { getCompany } from "@/features/company/lib/companyApi";
 import { notFound } from "next/navigation";

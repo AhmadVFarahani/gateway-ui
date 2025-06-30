@@ -1,6 +1,6 @@
 export interface Service {
   name: string;
-  baseURL: string;
+  baseUrl: string;
   description: string;
   id: number;
   isActive: boolean;
@@ -11,13 +11,13 @@ export interface Service {
 export interface CreateServiceRequest {
   name: string;
   description: string;
-  baseURL: string;
+  baseUrl: string;
   isActive: boolean;
 }
 
 export interface UpdateServiceRequest {
   name: string;
   description: string;
-  baseURL: string;
+  baseUrl: string;
   isActive: boolean;
 }
